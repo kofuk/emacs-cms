@@ -1,3 +1,4 @@
 *.o
 *~
 /loader/elscript
+/posts
