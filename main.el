@@ -36,19 +36,12 @@
         (setq path-segments (append (list seg) path-segments)))
       (setq prev (point)))))
 
-(princ-list "Status: 200 OK")
-(princ-list "Content-Type: text/html\n")
-
-(princ-list "<!doctype html>")
-(princ-list "<html>")
-(princ-list "<head>")
-(princ-list "  <meta charset=\"utf-8\">")
-(princ-list "  <title>Hello</title>")
-(princ-list "</head>")
-(princ-list "<body>")
-(princ-list "  <h1>Hello from Emacs</h1>")
-(princ-list path-segments)
-(princ-list "</body>")
-(princ-list "</html>")
+(cond ((= (length path-segments) 0)
+       (load (concat (file-name-directory load-file-name) "index.el")))
+      ((string= (nth 0 path-segments) "entry")
+       (pop path-segments)
+       (load (concat (file-name-directory load-file-name) "entry.el")))
+      (t
+       (load (concat (file-name-directory load-file-name) "not-found-handler.el"))))
 
 ;;; main.el ends here
