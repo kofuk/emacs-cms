@@ -9,6 +9,8 @@
 
 ;;; Code:
 
+(load (concat (file-name-directory load-file-name) "utilities.el"))
+
 (setq path-segments '())
 
 ;; divide path string into path-segments list
