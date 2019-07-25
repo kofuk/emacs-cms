@@ -18,5 +18,5 @@ int main(int argc, char **argv)
     getcwd(buf, 256);
     printf("Working-Directory: %s\n", buf);
 
-    return EXIT_SUCCESS;
+    return EXIT_FAILURE;
 }
