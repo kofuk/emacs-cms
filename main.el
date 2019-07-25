@@ -9,6 +9,7 @@
 
 ;;; Code:
 
+(load (concat (file-name-directory load-file-name) "config.el"))
 (load (concat (file-name-directory load-file-name) "utilities.el"))
 
 (setq path-segments '())
