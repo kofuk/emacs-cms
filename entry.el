@@ -60,30 +60,33 @@
 (defun serve-entry-listing (page)
   (princ-list "TODO: show entry listing for page " page))
 
+;; Entry router
+(cond
+ ((= (length path-segments) 0)
+  (header-status 200 "OK")
+  (header-content-type "text/plain")
+  (header-end)
+  (serve-entry-listing
+   (if (cdr (assoc "page" path-parameters))
+       (string-to-number (cdr (assoc "page" path-parameters)))
+     1)))
 
-(cond ((= (length path-segments) 0)
-       (header-status 200 "OK")
-       (header-content-type "text/plain")
-       (header-end)
-       (serve-entry-listing
-        (if (cdr (assoc "page" path-parameters))
-            (string-to-number (cdr (assoc "page" path-parameters)))
-          1)))
-      ((file-exists-p (concat
-                       (file-name-directory load-file-name)
-                       "posts/"
-                       (nth 0 path-segments)
-                       "/post.org"))
-       (serve-entry (concat
-                     (file-name-directory load-file-name)
-                     "posts/"
-                     (nth 0 path-segments)
-                     "/post.org")))
-      (t
-       (header-status 404 "Not found")
-       (header-html)
-       (header-end)
-       (princ "<!doctype html>
+ ((file-exists-p (concat
+                  (file-name-directory load-file-name)
+                  "posts/"
+                  (nth 0 path-segments)
+                  "/post.org"))
+  (serve-entry (concat
+                (file-name-directory load-file-name)
+                "posts/"
+                (nth 0 path-segments)
+                "/post.org")))
+
+ (t
+  (header-status 404 "Not found")
+  (header-html)
+  (header-end)
+  (princ-list "<!doctype html>
 <html>
 <head>
   <title>404 Not found</title>
