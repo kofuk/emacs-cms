@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 {
     if (argc < 2) return EXIT_FAILURE;
 
-    execlp("emacs", "-Q", "--script", argv[1], NULL);
+    execlp("emacs", "emacs", "-Q", "--script", argv[1], NULL);
 
     perror("error");
 
