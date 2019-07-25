@@ -13,6 +13,7 @@
 (load (concat (file-name-directory load-file-name) "utilities.el"))
 
 (setq path-segments '())
+(setq path-parameters '())
 
 ;; divide path string into path-segments list
 (with-temp-buffer
@@ -38,6 +39,37 @@
       (when (> (length seg) 0)
         (setq path-segments (append (list seg) path-segments)))
       (setq prev (point)))))
+
+;; Parse query string
+(setq key "")
+(setq value "")
+
+(with-temp-buffer
+  ;; Add '&' to make the parse easier
+  (insert "&")
+  (insert (getenv "QUERY_STRING"))
+  (goto-char (point-max))
+  (while (search-backward "&" nil t)
+    (let (key-begin)
+      (setq key-begin (+ (point) 1))
+
+      ;; Search for '='
+      ;; If found, parse the parameter as key=value format
+      ;; else, parse the parameter as key-only parameter.
+      (if (search-forward "=" nil t)
+          (progn
+            (setq key (buffer-substring key-begin (- (point) 1)))
+            (setq value (buffer-substring (point) (point-max))))
+        (setq key (buffer-substring key-begin (point-max)))
+        (setq value ""))
+
+      ;; Move point to just before the '&'
+      (goto-char (- key-begin 1)))
+
+    ;; Delete parsed part
+    (kill-line)
+    (add-to-list 'path-parameters (cons key value))))
+
 
 (cond ((= (length path-segments) 0)
        (load (concat (file-name-directory load-file-name) "index.el")))

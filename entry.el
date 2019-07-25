@@ -57,11 +57,18 @@
 
     (export-current-buffer-as-html)))
 
+(defun serve-entry-listing (page)
+  (princ-list "TODO: show entry listing for page " page))
+
+
 (cond ((= (length path-segments) 0)
        (header-status 200 "OK")
        (header-content-type "text/plain")
        (header-end)
-       (princ "TODO: List entries"))
+       (serve-entry-listing
+        (if (cdr (assoc "page" path-parameters))
+            (string-to-number (cdr (assoc "page" path-parameters)))
+          1)))
       ((file-exists-p (concat
                        (file-name-directory load-file-name)
                        "posts/"
