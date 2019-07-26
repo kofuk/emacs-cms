@@ -9,18 +9,13 @@
 
 ;;; Code:
 
-(princ-list
- "Status: 404 Not Found
-Content-Type: text/html
-
-<!doctype html>
-<html>
-<head>
-  <title>Not Found</title>
-</head>
-<body>
-  <h1>" path-segments " Not Found</h1>
-</body>
-</html>")
+(header-status 404 "Not found")
+(header-html)
+(header-end)
+(with-temp-buffer
+  (insert-file-contents (concat (file-name-directory load-file-name) "template/not-found.html"))
+  (search-forward "{{path}}" nil t)
+  (replace-match (format "%s" path-segments))
+  (princ (buffer-string)))
 
 ;;; not-found-handler.el ends here

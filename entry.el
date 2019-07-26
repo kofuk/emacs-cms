@@ -142,19 +142,7 @@
                 "/post.org")))
 
  (t
-  (header-status 404 "Not found")
-  (header-html)
-  (header-end)
-  (princ-list "<!doctype html>
-<html>
-<head>
-  <title>404 Not found</title>
-</head>
-<body>
-  <h1>" path-segments "</h1>
-  Specified entry not found
-</body>
-</html>")))
+  (not-found)))
 
 
 ;;; entry.el ends here
