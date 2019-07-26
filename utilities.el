@@ -28,4 +28,7 @@
 (defun header-end ()
   (princ "\n"))
 
+(defun not-found ()
+  (load (concat (file-name-directory load-file-name) "not-found-handler.el")))
+
 ;;; entry.el ends here

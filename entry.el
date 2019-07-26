@@ -9,6 +9,14 @@
 
 ;;; Code:
 
+(setq entry-id "")
+
+(defun custom-image-export (path desc format)
+  (if (eq format 'html)
+      (if desc
+          (format "<img src=\"/images/%s/%s\" alt=\"%s\">" entry-id path desc)
+        (format "<img src=\"/images/%s/%s\">" entry-id path))))
+
 (defun export-current-buffer-as-html ()
       ;; Load dracula-theme for better syntax highlight output
     (add-to-list 'custom-theme-load-path
@@ -40,6 +48,7 @@
     (setq org-html-head-include-scripts nil)
     (setq org-export-with-toc nil)
     (setq org-export-with-author nil)
+    (org-add-link-type "img" nil 'custom-image-export)
 
     (org-html-export-as-html)
     (switch-to-buffer "*Org HTML Export*")
@@ -76,6 +85,7 @@
                   "posts/"
                   (nth 0 path-segments)
                   "/post.org"))
+  (setq entry-id (nth 0 path-segments))
   (serve-entry (concat
                 (file-name-directory load-file-name)
                 "posts/"
