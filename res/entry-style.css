@@ -16,6 +16,7 @@ html, body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    z-index: 10;
 }
 
 .subtitle {
