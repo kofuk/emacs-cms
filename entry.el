@@ -81,7 +81,7 @@
   "Return a entry list for page"
   (let ((dirent (directory-files
                  (concat (file-name-directory load-file-name) "posts/")
-                 nil "^[^.].+$" nil)))
+                 nil "^[^._].+$" nil)))
     (reverse dirent)))
 
 (defun get-entry-date (entry)

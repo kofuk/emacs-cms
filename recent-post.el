@@ -16,7 +16,7 @@
     (insert "<table class=\"recent-post-table\" cellpadding=\"10\">")
     (let ((dirent (directory-files
                    (concat (file-name-directory load-file-name) "posts")
-                   nil "^[^.].+" nil)) (i 0) (entry ""))
+                   nil "^[^._].+" nil)) (i 0) (entry ""))
       (setq dirent (reverse dirent))
       (while (and (< i (length dirent)) (< i 3))
         (setq entry (nth i dirent))
