@@ -9,18 +9,11 @@
 
 ;;; Code:
 
-(princ
- "Status: 200 OK
-Content-Type: text/html
-
-<!doctype html>
-<html>
-<head>
-  <title>Top page</title>
-</head>
-<body>
-  <h1>Top Page</h1>
-</body>
-</html>")
+(header-status 200 "OK")
+(header-html)
+(header-end)
+(with-temp-buffer
+  (insert-file-contents (concat (file-name-directory load-file-name) config-index-template-path))
+  (princ (buffer-string)))
 
 ;;; index.el ends here

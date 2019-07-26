@@ -10,5 +10,6 @@
 ;;; Code:
 
 (setq config-blog-name "Trellis Blog")
+(setq config-index-template-path "template/index.html")
 
 ;;; config.el ends here
