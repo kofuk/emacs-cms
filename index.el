@@ -14,6 +14,10 @@
 (header-end)
 (with-temp-buffer
   (insert-file-contents (concat (file-name-directory load-file-name) config-index-template-path))
+  (if (search-forward "{{recent-post}}" nil t)
+      (progn (replace-match "")
+             (load (concat (file-name-directory load-file-name) "recent-post.el"))
+             (insert (recent-post-html))))
   (princ (buffer-string)))
 
 ;;; index.el ends here
