@@ -31,4 +31,16 @@
 (defun not-found ()
   (load (concat (file-name-directory load-file-name) "not-found-handler.el")))
 
+(defun get-entry-title (entry)
+  (with-temp-buffer
+    (insert-file-contents (concat (file-name-directory load-file-name)
+                                  "posts/" entry "/post.org") nil 0 100)
+    (goto-char (point-min))
+    (if (search-forward "#+TITLE:" nil t)
+        (progn
+          (let ((title-start (point)))
+            (move-end-of-line 1)
+            (buffer-substring title-start (point))))
+      "No Title")))
+
 ;;; entry.el ends here

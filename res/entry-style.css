@@ -37,6 +37,31 @@ html, body {
     padding: 100px 20px 10px 20px;
 }
 
+.postamble {
+    background-color: #eee;
+}
+
+.recent-post-container {
+    margin: 10px;
+}
+
+.recent-post-table {
+    margin-left: 20px;
+    width: 70%;
+}
+
+.recent-post-table tr {
+    border: solid 1px #eee;
+    background-color: #ddd;
+}
+
+.recent-post-table a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    outline: none;
+}
+
 .entries {
     width: 100%;
 }

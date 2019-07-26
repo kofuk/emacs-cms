@@ -43,7 +43,8 @@
 
     (setq org-html-doctype "html5")
     (setq org-html-validation-link nil)
-    (setq org-html-postamble nil)
+    ;;    (setq org-html-postamble nil)
+    (setq org-html-postamble "<div class=\"postamble\">Last Update: %d {{recent-post}}</div>")
     (setq org-html-head-include-default-style nil)
     (setq org-html-head-include-scripts nil)
     (setq org-export-with-toc nil)
@@ -53,6 +54,14 @@
 
     (org-html-export-as-html)
     (switch-to-buffer "*Org HTML Export*")
+
+    ;; Insert recent post section
+    (load (concat (file-name-directory load-file-name) "recent-post.el"))
+    (goto-char (point-min))
+    (search-forward "{{recent-post}}" nil t)
+    (replace-match "")
+    (insert (recent-post-html))
+
     (princ (buffer-string)))
 
 (defun serve-entry (name)
@@ -73,18 +82,6 @@
                  (concat (file-name-directory load-file-name) "posts/")
                  nil "^[^.].+$" nil)))
     (reverse dirent)))
-
-(defun get-entry-title (entry)
-  (with-temp-buffer
-    (insert-file-contents (concat (file-name-directory load-file-name)
-                                  "posts/" entry "/post.org") nil 0 100)
-    (goto-char (point-min))
-    (if (search-forward "#+TITLE:" nil t)
-        (progn
-          (let ((title-start (point)))
-            (move-end-of-line 1)
-            (buffer-substring title-start (point))))
-      "No Title")))
 
 (defun get-entry-date (entry)
   "Return created date of entry according to entry id."
