@@ -48,6 +48,7 @@
     (setq org-html-head-include-scripts nil)
     (setq org-export-with-toc nil)
     (setq org-export-with-author nil)
+    (setq org-export-default-language "ja")
     (org-add-link-type "img" nil 'custom-image-export)
 
     (org-html-export-as-html)
