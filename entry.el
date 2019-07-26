@@ -36,7 +36,8 @@
     ;; Add options at the end of org document header
     (while (string= (buffer-substring (point) (+ (point) 2)) "#+")
       (next-line))
-    (insert "#+HTML_HEAD: <link rel=\"stylesheet\" href=\"/res/entry-style.css\">")
+    (insert "#+HTML_HEAD: <link rel=\"stylesheet\" href=\"/res/entry-style.css\">\n")
+    (insert"#+HTML_HEAD_EXTRA: <script src=\"/res/entry.js\" async></script>\n")
 
     ;; Let's enable org-mode
     (org-mode)

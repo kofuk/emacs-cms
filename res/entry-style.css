@@ -17,6 +17,7 @@ html, body {
     white-space: nowrap;
     text-overflow: ellipsis;
     z-index: 10;
+    cursor: pointer;
 }
 
 .subtitle {
