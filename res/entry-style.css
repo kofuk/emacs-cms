@@ -37,6 +37,30 @@ html, body {
     padding: 100px 20px 10px 20px;
 }
 
+.entries {
+    width: 100%;
+}
+
+.entry-row {
+    background-color: #bbb;
+    cursor: pointer;
+    transition: all 200ms;
+    border: solid 7px #ddd;
+}
+
+.entry-row:hover {
+    background-color: #aaa;
+}
+
+.entry-row a {
+    display: block;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+    outline: none;
+}
+
 .todo {
     font-family: monospace;
     color: red;

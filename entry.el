@@ -67,14 +67,62 @@
 
     (export-current-buffer-as-html)))
 
+(defun entry-list (page)
+  "Return a entry list for page"
+  (let ((dirent (directory-files
+                 (concat (file-name-directory load-file-name) "posts/")
+                 nil "^[^.].+$" nil)))
+    (reverse dirent)))
+
+(defun get-entry-title (entry)
+  (with-temp-buffer
+    (insert-file-contents (concat (file-name-directory load-file-name)
+                                  "posts/" entry "/post.org") nil 0 100)
+    (goto-char (point-min))
+    (if (search-forward "#+TITLE:" nil t)
+        (progn
+          (let ((title-start (point)))
+            (move-end-of-line 1)
+            (buffer-substring title-start (point))))
+      "No Title")))
+
+(defun get-entry-date (entry)
+  "Return created date of entry according to entry id."
+  (if (string-match-p "^[0-9]{8}" entry)
+      (with-temp-buffer
+        (insert entry)
+        (forward-char 4)
+        (insert "/")
+        (forward-char 2)
+        (insert "/")
+        (forward-char 2)
+        (kill-line)
+        (buffer-string))
+    ""))
+
 (defun serve-entry-listing (page)
-  (princ-list "TODO: show entry listing for page " page))
+  (with-temp-buffer
+    (insert-file-contents (concat (file-name-directory load-file-name) "template/entry-listing.html"))
+    (goto-char (point-min))
+    (while (search-forward "{{page}}" nil t)
+      (replace-match (number-to-string page)))
+    (goto-char (point-min))
+    (search-forward "{{content}}")
+    (replace-match "")
+
+    ;; write entries
+    (insert "<table class=\"entries\" cellpadding=\"20\">\n")
+    (dolist (ent (entry-list page))
+      (insert (format "<tr class=\"entry-row\"><td><a href=\"/entry/%s\">%s</a></td><td>%s</td></tr>\n" ent (get-entry-title ent) (get-entry-date ent))))
+    (insert "</table>\n")
+
+    (princ-list (buffer-string))))
 
 ;; Entry router
 (cond
  ((= (length path-segments) 0)
   (header-status 200 "OK")
-  (header-content-type "text/plain")
+  (header-html)
   (header-end)
   (serve-entry-listing
    (if (cdr (assoc "page" path-parameters))
