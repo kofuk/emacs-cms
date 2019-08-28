@@ -86,9 +86,10 @@
 
 (defun get-entry-date (entry)
   "Return created date of entry according to entry id."
-  (if (string-match-p "^[0-9]{8}" entry)
+  (if (string-match-p "^[0-9][0-9][0-9][0-9][01][0-9][0-3][0-9]" entry)
       (with-temp-buffer
         (insert entry)
+        (goto-char (point-min))
         (forward-char 4)
         (insert "/")
         (forward-char 2)
