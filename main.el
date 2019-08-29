@@ -11,6 +11,7 @@
 
 (load (concat (file-name-directory load-file-name) "config.el"))
 (load (concat (file-name-directory load-file-name) "utilities.el"))
+(load (concat (file-name-directory load-file-name) "config-verifier.el"))
 
 (setq path-segments '())
 (setq path-parameters '())
@@ -76,6 +77,10 @@
       ((string= (nth 0 path-segments) "entry")
        (pop path-segments)
        (load (concat (file-name-directory load-file-name) "entry.el")))
+      ((and (= (length path-segments) 1) (string= (nth 0 path-segments) "sitemap.xml"))
+       (load (concat (file-name-directory load-file-name) "sitemap.el")))
+      ((and (= (length path-segments) 1) (string= (nth 0 path-segments) "robots.txt"))
+       (load (concat (file-name-directory load-file-name) "robots-txt.el")))
       (t
        (load (concat (file-name-directory load-file-name) "not-found-handler.el"))))
 

@@ -11,5 +11,7 @@
 
 (setq config-blog-name "Trellis Blog")
 (setq config-index-template-path "template/index.html")
+(setq config-https-capable t)
+(setq config-domain-name "example.com")
 
 ;;; config.el ends here
